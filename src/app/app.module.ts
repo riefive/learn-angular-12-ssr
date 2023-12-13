@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { ErrorMessageComponent } from './components/commons/error-message.component';
+import { SecurityComponent } from './components/security/security.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContactComponent,
-    ErrorMessageComponent
+    ErrorMessageComponent,
+    SecurityComponent
   ],
   imports: [
     FormsModule,
