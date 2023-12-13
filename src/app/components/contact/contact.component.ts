@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-contact',
@@ -17,7 +17,13 @@ export class ContactComponent implements OnInit {
       name: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       description: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      cities: new FormArray([])
     });
+  }
+
+  get CityControls() {
+    const current = this.form.get('cities')!;
+    return (<FormArray>current).controls;
   }
 
   CheckInvalid(name: string) {
@@ -27,8 +33,21 @@ export class ContactComponent implements OnInit {
 
   GetControlInvalid(name: string, type: string) {
     const control = this.form.get(name)!
-    if (!control) return false
+    if (!control) return false;
     return control.errors?.[type]!
+  }
+
+  HandleAddCity() {
+    let cities = this.form.get('cities')!;
+    if (!cities) return;
+    const control = new FormControl('', Validators.required);
+    (<FormArray>cities).push(control);
+  }
+
+  HandleRemoveCity(index: number) {
+    let cities = this.form.get('cities')!;
+    if (!cities) return;
+    (<FormArray>cities).removeAt(index);
   }
 
   HandleSubmit() {
