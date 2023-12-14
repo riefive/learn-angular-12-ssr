@@ -10,6 +10,7 @@ import { DemoImageComponent } from './components/demo-image/demo-image.component
 import { LazyImageDirective } from './directives/lazy-image.directive';
 import { TextHighlightDirective } from './directives/text-highlight.directive';
 import { TextHighlightEventDirective } from './directives/text-highlight-event.directive';
+import { SafePipe } from './pipes/safe.pipe';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { TextHighlightEventDirective } from './directives/text-highlight-event.d
     ErrorMessageComponent,
     SecurityComponent,
     DemoImageComponent,
+    SafePipe,
     LazyImageDirective,
     TextHighlightDirective,
     TextHighlightEventDirective

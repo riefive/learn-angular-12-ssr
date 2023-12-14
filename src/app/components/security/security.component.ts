@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
@@ -7,13 +7,16 @@ import { of } from 'rxjs';
   templateUrl: './security.component.html',
   styleUrls: ['./security.component.css']
 })
-export class SecurityComponent implements OnInit {
+export class SecurityComponent implements OnInit, AfterViewInit {
   dangerousUrl: string = '';
   trustedUrl!: SafeUrl;
   dangerousVideoUrl!: string;
   videoUrl!: SafeResourceUrl;
   numbers: any;
   htmlSnippet: string = '';
+  isImagePlace: boolean = false;
+
+  @ViewChild('iframeUntrust') iframe!: ElementRef;
 
   constructor(private sanitizer: DomSanitizer) {
     this.numbers = of(1, 2, 3); // simple observable that emits three values
@@ -23,12 +26,20 @@ export class SecurityComponent implements OnInit {
   ngOnInit(): void {
     this.dangerousUrl = 'javascript:alert("Hi there")';
     this.trustedUrl = this.sanitizer.bypassSecurityTrustUrl(this.dangerousUrl);
-    this.SanitizeVideoUrl('mVjYG9TSN88');
     this.numbers.subscribe({
       next(value: any) { console.log('Observable emitted the next value: ' + value); },
       error(err: any)  { console.error('Observable emitted an error: ' + err); },
       complete()  { console.log('Observable emitted the complete notification'); }
     });
+    this.SanitizeVideoUrl('mVjYG9TSN88');
+  }
+
+  ngAfterViewInit(): void {
+    const iframeSrcText = this.iframe.nativeElement.getAttribute('src')!;
+    if (!iframeSrcText) {
+      this.iframe.nativeElement
+      this.isImagePlace = true;
+    }
   }
 
   SanitizeVideoUrl(id: string) {
