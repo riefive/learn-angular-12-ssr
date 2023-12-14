@@ -9,6 +9,7 @@ import { SecurityComponent } from './components/security/security.component';
 import { DemoImageComponent } from './components/demo-image/demo-image.component';
 import { LazyImageDirective } from './directives/lazy-image.directive';
 import { TextHighlightDirective } from './directives/text-highlight.directive';
+import { TextHighlightEventDirective } from './directives/text-highlight-event.directive';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TextHighlightDirective } from './directives/text-highlight.directive';
     SecurityComponent,
     DemoImageComponent,
     LazyImageDirective,
-    TextHighlightDirective
+    TextHighlightDirective,
+    TextHighlightEventDirective
   ],
   imports: [
     FormsModule,
