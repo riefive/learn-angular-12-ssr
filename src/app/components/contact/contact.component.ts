@@ -21,7 +21,7 @@ export class ContactComponent implements OnInit {
     });
   }
 
-  get CityControls() {
+  get cityControls() {
     const current = this.form.get('cities')!;
     return (<FormArray>current).controls;
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
@@ -15,6 +15,8 @@ export class SecurityComponent implements OnInit, AfterViewInit {
   numbers: any;
   htmlSnippet: string = '';
   isImagePlace: boolean = false;
+  inputValue: string = '';
+  sanitizedValue: string = '';
 
   @ViewChild('iframeUntrust') iframe!: ElementRef;
 
@@ -37,9 +39,15 @@ export class SecurityComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     const iframeSrcText = this.iframe.nativeElement.getAttribute('src')!;
     if (!iframeSrcText) {
-      this.iframe.nativeElement
       this.isImagePlace = true;
     }
+  }
+
+  SanitizeInput() {
+    this.sanitizedValue = this.sanitizer.sanitize(
+      SecurityContext.HTML,
+      this.inputValue
+    )!;
   }
 
   SanitizeVideoUrl(id: string) {
